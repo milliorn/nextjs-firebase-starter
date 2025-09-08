@@ -3,29 +3,29 @@ import signUp from "@/firebase/auth/signup";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
-function Page(): JSX.Element {
-  const [ email, setEmail ] = useState( '' );
-  const [ password, setPassword ] = useState( '' );
+function Page() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const router = useRouter();
 
   // Handle form submission
-  const handleForm = async ( event: { preventDefault: () => void } ) => {
+  const handleForm = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     // Attempt to sign up with provided email and password
-    const { result, error } = await signUp( email, password );
+    const { result, error } = await signUp(email, password);
 
-    if ( error ) {
+    if (error) {
       // Display and log any sign-up errors
-      console.log( error );
+      console.log(error);
       return;
     }
 
     // Sign up successful
-    console.log( result );
+    console.log(result);
 
     // Redirect to the admin page
-    router.push( "/admin" );
+    router.push("/admin");
   }
 
   return (
@@ -38,7 +38,7 @@ function Page(): JSX.Element {
               Email
             </label>
             <input
-              onChange={( e ) => setEmail( e.target.value )}
+              onChange={(e) => setEmail(e.target.value)}
               required
               type="email"
               name="email"
@@ -52,7 +52,7 @@ function Page(): JSX.Element {
               Password
             </label>
             <input
-              onChange={( e ) => setPassword( e.target.value )}
+              onChange={(e) => setPassword(e.target.value)}
               required
               type="password"
               name="password"
