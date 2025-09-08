@@ -75,10 +75,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - Click on the web icon button to create your web app. It will show a text popup `Web`.
 - Register app by giving it a nickname and click `Register app` button.
 - Where package.json is located, in your cli, type `npm i firebase`.
-- Copy configuration file. Make a new file in `src` called `firebase` called `firebase.js`.
+- Copy configuration file. Make a new file in `src` called `firebase.js`.
 - In project root, create a file and name it `.env`.
 - Make sure you add `.env.local` to your `.gitignore` so you don't expose your variables in git repo.
-- Follow the instructions here at <https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#loading-environment-variables> to add your variables from firebase.js into this file.
+- Follow the [instructions here](https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#loading-environment-variables) to add your variables from firebase.js into this file.
 
 Example...
 
@@ -104,16 +104,30 @@ You should now be setup to use Firebase.
 
 ## Folder Structure
 
-The folder structure of this project is organized as follows:
+The project’s folder structure is organized as follows:
 
 - `pages`: Contains the Next.js pages for server-side rendering.
-- `components`: Holds the reusable React components.
+- `components`: Holds reusable React components.
 - `lib`: Includes utility functions and modules.
 - `public`: Stores static assets such as images, fonts, and stylesheets.
 - `styles`: Contains global styles and Tailwind CSS configuration.
-- `firebase`: Houses the Firebase configuration and Firebase-related functions.
+- `firebase`: Houses Firebase configuration and related functions.
 
-Feel free to modify and expand the folder structure according to your project requirements.
+You are free to modify or expand the folder structure according to your project’s needs.  
+For example, additional subfolders could be organized like this:
+
+- `components`
+  - `UI`
+  - `custom`
+  - `partials`
+  - ...
+- `public`
+  - `assets`
+    - `images`
+    - `fonts`
+    - `gifs`
+  - ...
+- ...
 
 ## Deployment
 
@@ -129,7 +143,16 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 
 ## Acknowledgements
 
-This project was created using the Next.js framework and Firebase platform.
+This project was built with the help of several amazing tools, frameworks, and resources:
+
+- [Next.js](https://nextjs.org/) – for providing a modern React framework with server-side rendering and powerful features.  
+- [Firebase](https://firebase.google.com/) – for authentication, real-time database, and cloud services that simplify app development.  
+- [Tailwind CSS](https://tailwindcss.com/) – for a utility-first CSS framework that makes styling fast and consistent.  
+- [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/) – for enforcing best practices and maintaining a clean, consistent codebase.  
+- [Vercel](https://vercel.com/) – for seamless deployment and hosting tailored to Next.js projects.  
+- [Open Source Community](https://github.com/) – for the continuous contributions, packages, and inspiration that make projects like this possible.  
+
+Special thanks to the Next.js and Firebase teams for their excellent documentation and active communities, which made this starter template easier to create and extend.
 
 Resources
 
