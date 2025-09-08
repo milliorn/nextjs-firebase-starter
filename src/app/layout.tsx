@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 
 // Load the Inter font with 'latin' subset
-const inter = Inter( { subsets: [ 'latin' ] } );
+const inter = Inter({ subsets: ['latin'] });
 
 // Metadata for the application
 export const metadata = {
@@ -12,7 +12,7 @@ export const metadata = {
 };
 
 // Root layout component for the application
-export default function RootLayout( { children }: { children: React.ReactNode } ): JSX.Element {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       {/*

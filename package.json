@@ -1,26 +1,31 @@
 {
-  "name": "nextjs-13-firebase-starter",
-  "version": "0.1.0",
+  "name": "nextjs-firebase-starter",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "release": "standard-version"
   },
   "dependencies": {
-    "@types/node": "24.1.0",
-    "@types/react": "19.1.9",
-    "@types/react-dom": "19.1.7",
-    "autoprefixer": "10.4.21",
-    "eslint": "9.32.0",
-    "eslint-config-next": "15.4.5",
-    "firebase": "^12.0.0",
-    "next": "15.4.7",
-    "postcss": "8.5.6",
+    "firebase": "^12.2.1",
+    "next": "15.5.2",
     "react": "19.1.1",
-    "react-dom": "19.1.1",
-    "tailwindcss": "4.1.11",
-    "typescript": "5.9.2"
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/node": "24.1.0",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9",
+    "autoprefixer": "10.4.21",
+    "eslint": "9.34.0",
+    "eslint-config-next": "15.5.2",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.12",
+    "typescript": "5.9.2",
+    "standard-version": "^9.5.0"
   }
 }
