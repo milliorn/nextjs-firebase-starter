@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
     "@types/node": "24.1.0",
     "@types/react": "19.1.12",
     "@types/react-dom": "19.1.9",
@@ -17,10 +18,10 @@
     "eslint-config-next": "15.5.2",
     "firebase": "^12.2.1",
     "next": "15.5.2",
-    "postcss": "8.5.6",
+    "postcss": "^8.5.6",
     "react": "19.1.1",
     "react-dom": "19.1.1",
-    "tailwindcss": "4.1.12",
+    "tailwindcss": "^4.1.12",
     "typescript": "5.9.2"
   }
 }
