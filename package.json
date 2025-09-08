@@ -1,12 +1,13 @@
 {
   "name": "nextjs-firebase-starter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "release": "standard-version"
   },
   "dependencies": {
     "firebase": "^12.2.1",
@@ -24,6 +25,7 @@
     "eslint-config-next": "15.5.2",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.12",
-    "typescript": "5.9.2"
+    "typescript": "5.9.2",
+    "standard-version": "^9.5.0"
   }
 }
