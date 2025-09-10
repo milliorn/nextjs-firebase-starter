@@ -32,4 +32,4 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Run release
-        run: npm run releas
+        run: npm run release
