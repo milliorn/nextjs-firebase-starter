@@ -11,8 +11,12 @@ updates:
     schedule:
       interval: "monthly"
 
-  # Maintain dependencies for npm
+  # Maintain dependencies for npm (Next.js project)
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "monthly"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
