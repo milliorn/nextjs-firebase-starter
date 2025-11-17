@@ -15,19 +15,43 @@ jobs:
         id: dependabot-metadata
         uses: dependabot/fetch-metadata@v2.4.0
 
+      # Make sure the label exists so gh pr edit won't fail
+      - name: Ensure dependabot-update-type-null label exists
+        run: |
+          gh label create "dependabot-update-type-null" \
+            --color eeeeee \
+            --description "PR auto-closed by workflow due to null/empty update-type" || echo "Label already exists"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Handle when update-type is null/empty
+      - name: Handle updates with null update-type
+        if: ${{ steps.dependabot-metadata.outputs.update-type == '' || steps.dependabot-metadata.outputs.update-type == null }}
+        run: |
+          if gh pr close "$PR_URL"; then
+            gh pr comment "$PR_URL" --body "❌ Auto-closed: \`update-type\` from dependabot/fetch-metadata is **null/empty**, so this PR was automatically closed."
+            gh pr edit "$PR_URL" --add-label "dependabot-update-type-null"
+          else
+            gh pr comment "$PR_URL" --body "⚠️ Tried to auto-close this Dependabot PR because \`update-type\` is **null/empty**, but \`gh pr close\` failed. Please close this PR manually. See workflow logs for details."
+          fi
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Approve and auto-merge minor and patch updates
         if: ${{ steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch' || steps.dependabot-metadata.outputs.update-type == 'version-update:semver-minor' }}
         run: |
-          gh pr review "$PR_URL" --approve -b "✅ Auto-approved: This pull request includes a **patch** or **minor** update."
+          gh pr review "$PR_URL" --approve -b "Auto-approved: This pull request includes a **patch** or **minor** update."
           gh pr merge "$PR_URL" --squash --auto
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Require manual review for major updates
+      - name: Flag major updates for manual approval
         if: ${{ steps.dependabot-metadata.outputs.update-type == 'version-update:semver-major' }}
         run: |
-          gh pr review "$PR_URL" --comment -b "⚠️ This pull request includes a **major update**. Manual approval from a repo admin is required before merging."
+          gh pr comment "$PR_URL" --body "🚨 **Manual approval required:** This PR includes a **major update**. The repository owner must review and approve it."
+          gh pr edit "$PR_URL" --add-label "requires-manual-approval"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
