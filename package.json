@@ -13,13 +13,13 @@
     "firebase": "^12.6.0",
     "next": "^15.5.9",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.16",
     "@types/node": "^24.10.1",
     "@types/react": "19.2.7",
-    "@types/react-dom": "19.2.0",
+    "@types/react-dom": "19.2.3",
     "autoprefixer": "10.4.22",
     "eslint": "9.39.2",
     "eslint-config-next": "^15.5.6",
