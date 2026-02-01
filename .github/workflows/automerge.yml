@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Dependabot metadata
         id: dependabot-metadata
-        uses: dependabot/fetch-metadata@v2.4.0
+        uses: dependabot/fetch-metadata@v2.5.0
 
       # Make sure the label exists so gh pr edit won't fail
       - name: Ensure dependabot-update-type-null label exists
