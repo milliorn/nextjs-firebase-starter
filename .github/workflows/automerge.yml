@@ -10,29 +10,27 @@ jobs:
   review-dependabot-pr:
     runs-on: ubuntu-latest
     if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+
     steps:
       - name: Dependabot metadata
         id: dependabot-metadata
         uses: dependabot/fetch-metadata@v2.5.0
-
-      # Make sure the label exists so gh pr edit won't fail
-      - name: Ensure dependabot-update-type-null label exists
-        run: |
-          gh label create "dependabot-update-type-null" \
-            --color eeeeee \
-            --description "PR auto-closed by workflow due to null/empty update-type" || echo "Label already exists"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Handle when update-type is null/empty
       - name: Handle updates with null update-type
         if: ${{ steps.dependabot-metadata.outputs.update-type == '' || steps.dependabot-metadata.outputs.update-type == null }}
         run: |
           if gh pr close "$PR_URL"; then
-            gh pr comment "$PR_URL" --body "❌ Auto-closed: \`update-type\` from dependabot/fetch-metadata is **null/empty**, so this PR was automatically closed."
-            gh pr edit "$PR_URL" --add-label "dependabot-update-type-null"
+            gh label create "dependabot-update-type-null" \
+              --color "d73a4a" \
+              --description "Dependabot PR with null update-type (auto-closed)" \
+              || true
+
+            gh pr edit "$PR_URL" --add-label "dependabot-update-type-null" || true
+
+            gh pr comment "$PR_URL" --body "Auto-closed: \`update-type\` from dependabot/fetch-metadata is **null**, so this PR was automatically closed."
           else
-            gh pr comment "$PR_URL" --body "⚠️ Tried to auto-close this Dependabot PR because \`update-type\` is **null/empty**, but \`gh pr close\` failed. Please close this PR manually. See workflow logs for details."
+            gh pr comment "$PR_URL" --body "Tried to auto-close this Dependabot PR because \`update-type\` is **null**, but \`gh pr close\` failed. Please close this PR manually. See workflow logs for details."
           fi
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
@@ -47,11 +45,21 @@ jobs:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Flag major updates for manual approval
+      - name: Auto-close major updates
         if: ${{ steps.dependabot-metadata.outputs.update-type == 'version-update:semver-major' }}
         run: |
-          gh pr comment "$PR_URL" --body "🚨 **Manual approval required:** This PR includes a **major update**. The repository owner must review and approve it."
-          gh pr edit "$PR_URL" --add-label "requires-manual-approval"
+          gh label create "dependabot-major-auto-closed" \
+            --color "d73a4a" \
+            --description "Dependabot PR with semver-major update (auto-closed)" \
+            || true
+
+          gh pr edit "$PR_URL" --add-label "dependabot-major-auto-closed" || true
+
+          if gh pr close "$PR_URL"; then
+            gh pr comment "$PR_URL" --body "Auto-closed: Dependabot **major** update (\`${{ steps.dependabot-metadata.outputs.update-type }}\`)."
+          else
+            gh pr comment "$PR_URL" --body "Tried to auto-close this Dependabot PR because it's a **major** update, but \`gh pr close\` failed. Please close it manually. See workflow logs."
+          fi
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
