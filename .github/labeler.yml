@@ -1,0 +1,43 @@
+documentation:
+- changed-files:
+  - any-glob-to-any-file: ['**/*.md', 'LICENSE', '.github/ISSUE_TEMPLATE/**']
+
+dependencies:
+- changed-files:
+  - any-glob-to-any-file: ['package.json', 'package-lock.json', '.github/dependabot.yml']
+
+github_actions:
+- changed-files:
+  - any-glob-to-any-file: '.github/workflows/**'
+
+javascript:
+- changed-files:
+  - any-glob-to-any-file: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.js', 'src/**/*.jsx']
+
+configuration:
+- changed-files:
+  - any-glob-to-any-file: ['next.config.*', 'tsconfig.json', 'postcss.config.*', 'tailwind.config.*', '.eslintrc*', 'next-env.d.ts', '.gitignore']
+
+styles:
+- changed-files:
+  - any-glob-to-any-file: ['src/**/*.css', 'tailwind.config.*', 'postcss.config.*']
+
+authentication:
+- changed-files:
+  - any-glob-to-any-file: ['src/firebase/auth/**', 'src/context/AuthContext.*', 'src/app/signin/**', 'src/app/signup/**']
+
+firebase:
+- changed-files:
+  - any-glob-to-any-file: 'src/firebase/**'
+
+assets:
+- changed-files:
+  - any-glob-to-any-file: ['public/**', 'src/app/favicon.ico', 'src/app/*.ico', 'src/app/*.png', 'src/app/*.svg']
+
+pages:
+- changed-files:
+  - any-glob-to-any-file: 'src/app/**'
+
+tests:
+- changed-files:
+  - any-glob-to-any-file: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx', '**/__tests__/**']
