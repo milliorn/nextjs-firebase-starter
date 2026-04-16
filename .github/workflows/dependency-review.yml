@@ -29,7 +29,7 @@ env:
 
 jobs:
   dependency-review:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       # Check out the repository so the action can read the manifest files.
