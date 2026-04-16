@@ -10,56 +10,25 @@ jobs:
   review-dependabot-pr:
     runs-on: ubuntu-latest
     if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
-
     steps:
       - name: Dependabot metadata
         id: dependabot-metadata
         uses: dependabot/fetch-metadata@v2.5.0
 
-      # Handle when update-type is null/empty
-      - name: Handle updates with null update-type
-        if: ${{ steps.dependabot-metadata.outputs.update-type == '' || steps.dependabot-metadata.outputs.update-type == null }}
-        run: |
-          if gh pr close "$PR_URL"; then
-            gh label create "dependabot-update-type-null" \
-              --color "d73a4a" \
-              --description "Dependabot PR with null update-type (auto-closed)" \
-              || true
-
-            gh pr edit "$PR_URL" --add-label "dependabot-update-type-null" || true
-
-            gh pr comment "$PR_URL" --body "Auto-closed: \`update-type\` from dependabot/fetch-metadata is **null**, so this PR was automatically closed."
-          else
-            gh pr comment "$PR_URL" --body "Tried to auto-close this Dependabot PR because \`update-type\` is **null**, but \`gh pr close\` failed. Please close this PR manually. See workflow logs for details."
-          fi
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Approve and auto-merge minor and patch updates
         if: ${{ steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch' || steps.dependabot-metadata.outputs.update-type == 'version-update:semver-minor' }}
         run: |
-          gh pr review "$PR_URL" --approve -b "Auto-approved: This pull request includes a **patch** or **minor** update."
+          gh pr review "$PR_URL" --approve -b "✅ Auto-approved: This pull request includes a **patch** or **minor** update."
           gh pr merge "$PR_URL" --squash --auto
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Auto-close major updates
+      - name: Deny major updates
         if: ${{ steps.dependabot-metadata.outputs.update-type == 'version-update:semver-major' }}
         run: |
-          gh label create "dependabot-major-auto-closed" \
-            --color "d73a4a" \
-            --description "Dependabot PR with semver-major update (auto-closed)" \
-            || true
-
-          gh pr edit "$PR_URL" --add-label "dependabot-major-auto-closed" || true
-
-          if gh pr close "$PR_URL"; then
-            gh pr comment "$PR_URL" --body "Auto-closed: Dependabot **major** update (\`${{ steps.dependabot-metadata.outputs.update-type }}\`)."
-          else
-            gh pr comment "$PR_URL" --body "Tried to auto-close this Dependabot PR because it's a **major** update, but \`gh pr close\` failed. Please close it manually. See workflow logs."
-          fi
+          gh pr review "$PR_URL" --request-changes -b "🚫 Denied: This PR includes a **major update**, which is not allowed."
+          gh pr close "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
