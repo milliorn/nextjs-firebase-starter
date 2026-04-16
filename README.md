@@ -145,12 +145,12 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 
 This project was built with the help of several amazing tools, frameworks, and resources:
 
-- [Next.js](https://nextjs.org/) – for providing a modern React framework with server-side rendering and powerful features.  
-- [Firebase](https://firebase.google.com/) – for authentication, real-time database, and cloud services that simplify app development.  
-- [Tailwind CSS](https://tailwindcss.com/) – for a utility-first CSS framework that makes styling fast and consistent.  
-- [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/) – for enforcing best practices and maintaining a clean, consistent codebase.  
-- [Vercel](https://vercel.com/) – for seamless deployment and hosting tailored to Next.js projects.  
-- [Open Source Community](https://github.com/) – for the continuous contributions, packages, and inspiration that make projects like this possible.  
+- [Next.js](https://nextjs.org/) – for providing a modern React framework with server-side rendering and powerful features.
+- [Firebase](https://firebase.google.com/) – for authentication, real-time database, and cloud services that simplify app development.
+- [Tailwind CSS](https://tailwindcss.com/) – for a utility-first CSS framework that makes styling fast and consistent.
+- [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/) – for enforcing best practices and maintaining a clean, consistent codebase.
+- [Vercel](https://vercel.com/) – for seamless deployment and hosting tailored to Next.js projects.
+- [Open Source Community](https://github.com/) – for the continuous contributions, packages, and inspiration that make projects like this possible.
 
 Special thanks to the Next.js and Firebase teams for their excellent documentation and active communities, which made this starter template easier to create and extend.
 

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useAuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -17,9 +17,7 @@ function Page() {
     // }, [ user ] );
   }, [user, router]); // Include 'router' in the dependency array to resolve eslint warning
 
-  return (
-    <h1>Only logged-in users can view this page</h1>
-  );
+  return <h1>Only logged-in users can view this page</h1>;
 }
 
 export default Page;
