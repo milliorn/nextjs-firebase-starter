@@ -1,0 +1,48 @@
+# Source repository: https://github.com/actions/dependency-review-action
+# Public documentation: https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review#dependency-review-enforcement
+name: "Dependency review"
+
+# Run on every pull request targeting main.
+# Scans dependency manifest changes against GitHub's advisory database for known CVEs.
+# When set as a required status check, this blocks automerge (and manual merges)
+# if a vulnerable dependency is introduced -- even via Dependabot patch/minor PRs.
+# Note: no paths filter -- the action exits cleanly when no manifests changed,
+# which keeps the required status check satisfied for all PRs.
+on:
+  pull_request:
+    branches: ["main"]
+
+# https://docs.github.com/en/enterprise-cloud@latest/code-security/supply-chain-security/understanding-your-software-supply-chain/using-the-dependency-submission-api
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  # Required for comment-summary-in-pr to post results as a PR comment.
+  pull-requests: write
+
+env:
+  # Opt into Node.js 24 now ahead of the June 2, 2026 forced migration.
+  # Avoids a breaking change when GitHub drops Node.js 20 support for actions.
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Check out the repository so the action can read the manifest files.
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 1
+
+      # Scan changed dependency files and fail if any known vulnerability
+      # at low severity or higher is introduced by this PR.
+      # Commonly enabled options, see https://github.com/actions/dependency-review-action#configuration-options for all available options.
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4.9.0
+        with:
+          comment-summary-in-pr: on-failure
+          fail-on-severity: low
