@@ -8,7 +8,7 @@ const db = getFirestore(firebase_app);
 export default async function addData(
   collection: string,
   id: string,
-  data: any
+  data: any,
 ) {
   // Variable to store the result of the operation
   let result = null;

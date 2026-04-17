@@ -34,12 +34,12 @@ If you want to contribute code, follow these steps:
 1. Fork the repository to your own GitHub account.
 2. Create a new branch from the `main` branch for your changes.
 3. Make your modifications and improvements in your branch.
-5. Test your changes to ensure they work as expected.
-6. Commit your changes with a clear and descriptive commit message.
-7. Push your changes to your forked repository.
-8. Submit a pull request (PR) to the `main` branch of the original repository.
-9. Wait for feedback and address any review comments if needed.
-10. Once your changes are approved, they will be merged into the main project.
+4. Test your changes to ensure they work as expected.
+5. Commit your changes with a clear and descriptive commit message.
+6. Push your changes to your forked repository.
+7. Submit a pull request (PR) to the `main` branch of the original repository.
+8. Wait for feedback and address any review comments if needed.
+9. Once your changes are approved, they will be merged into the main project.
 
 ## Bug Reports
 

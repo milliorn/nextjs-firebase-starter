@@ -1,11 +1,11 @@
-'use client'
+"use client";
 import signIn from "@/firebase/auth/signIn";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function Page() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
 
   // Handle form submission
@@ -25,18 +25,24 @@ function Page() {
     console.log(result);
 
     // Redirect to the admin page
-    // Typically you would want to redirect them to a protected page an add a check to see if they are admin or 
+    // Typically you would want to redirect them to a protected page an add a check to see if they are admin or
     // create a new page for admin
     router.push("/admin");
-  }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="w-full max-w-xs">
-        <form onSubmit={handleForm} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form
+          onSubmit={handleForm}
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        >
           <h1 className="text-3xl font-bold mb-6 text-black">Sign In</h1>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+            <label
+              htmlFor="email"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
               Email
             </label>
             <input
@@ -50,7 +56,10 @@ function Page() {
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
+            <label
+              htmlFor="password"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
               Password
             </label>
             <input

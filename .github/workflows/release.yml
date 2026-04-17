@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "src/**"
+      - "package.json"
+      - "package-lock.json"
 
 permissions:
   contents: write
@@ -11,11 +15,13 @@ permissions:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
