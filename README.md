@@ -1,88 +1,64 @@
-# Next.js 13 Firebase Starter
+# Next.js Firebase Starter
 
-This is a starter template for building Next.js 13 applications with Firebase. It provides a solid foundation for developing modern web applications with server-side rendering, authentication, and real-time data synchronization.
+A production-ready starter template for building full-stack web applications with **Next.js 15**, **React 19**, and **Firebase**. This template ships with email/password authentication, Firestore data helpers, a route-protected admin page, and a global auth context so you can skip the boilerplate and start building.
+
+---
+
+## Tech Stack
+
+|Layer|Technology|
+|-----|---------|
+|Framework|[Next.js 15](https://nextjs.org/) (App Router)|
+|UI Library|[React 19](https://react.dev/)|
+|Styling|[Tailwind CSS](https://tailwindcss.com/)|
+|Language|[TypeScript](https://www.typescriptlang.org/)|
+|Backend / Auth|[Firebase](https://firebase.google.com/) (Auth + Firestore)|
+|Linting|[ESLint](https://eslint.org/) + [Prettier](https://prettier.io/)|
+
+---
 
 ## Features
 
-- Next.js 13: Build powerful and scalable server-side rendered React applications.
-- Firebase: Leverage the Firebase platform for authentication, real-time database, and cloud functions.
-- Tailwind CSS: Rapidly build custom user interfaces using the utility-first CSS framework.
-- Automatic Code Splitting: Optimize performance by splitting your JavaScript code into smaller, cacheable chunks.
-- Dynamic Routing: Create dynamic routes for handling different pages and content.
-- Hot Module Replacement: Enjoy a fast development experience with hot module replacement for instant code changes.
-- Environment Variables: Safely manage environment-specific configuration values using environment variables.
-- ESLint and Prettier: Maintain code quality and consistency with the help of ESLint and Prettier.
+- **Email / Password Authentication** - sign-up, sign-in, and sign-out flows backed by Firebase Auth
+- **Global Auth Context** - a React context provider (`AuthContextProvider`) wraps the app and exposes the current user via `useAuthContext()`
+- **Protected Routes** - the `/admin` route redirects unauthenticated users to the home page
+- **Firestore Helpers** - typed `addData` and `getData` utilities for reading and writing documents
+- **App Router** - built on the Next.js App Router with server components, layouts, and file-based routing
+- **Inter Font** - automatically loaded and optimized via `next/font/google`
+
+---
 
 ## Prerequisites
 
-Before getting started, ensure you have the following prerequisites:
+- **Node.js 18** or higher
+- **npm** (bundled with Node.js)
+- A [Firebase project](https://console.firebase.google.com/)
 
-- Node.js 14 or higher
-- npm or yarn package manager
+---
 
 ## Getting Started
 
-- To start a new project using this template click `Use this template` button.
-- Navigate into the project directory: `cd nextjs-13-firebase-starter`
-- Install the dependencies:
+### 1. Use the template
+
+Click **Use this template** on GitHub to create your own repository, then clone it:
 
 ```bash
-  npm install
-  # or
-  yarn install
+git clone https://github.com/<your-username>/<your-repo>.git
+cd <your-repo>
+npm install
 ```
 
-- Run the development server:
+### 2. Configure environment variables
+
+Create a `.env.local` file in the project root:
 
 ```bash
-  npm run dev
-  # or
-  yarn dev
+cp .env.local.example .env.local   # if the example file exists, otherwise create it
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Add your Firebase project credentials (see [Set Up Firebase](#set-up-firebase) below):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-## Set Up Firebase
-
-<https://console.firebase.google.com/>
-
-- Log in with your Google account.
-- Click on `Go to console` button.
-- Click `Add Project` card.
-- Give your project a name.
-- Click on `Continue` button.
-- Disable `Google Analytics for this project` (unless you wish to use it).
-- Click `Create project` button.
-- Click on the web icon button to create your web app. It will show a text popup `Web`.
-- Register app by giving it a nickname and click `Register app` button.
-- Where package.json is located, in your cli, type `npm i firebase`.
-- Copy configuration file. Make a new file in `src` called `firebase.js`.
-- In project root, create a file and name it `.env`.
-- Make sure you add `.env.local` to your `.gitignore` so you don't expose your variables in git repo.
-- Follow the [instructions here](https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#loading-environment-variables) to add your variables from firebase.js into this file.
-
-Example...
-
-```md
+```env
 NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
@@ -91,71 +67,140 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 ```
 
-- Create `env` file and paste these variables with your own information.
-- Click on `Continue on console` button
-- On your project homepage, choose a product to add to your app. First, click on `Authentication`.
-- Under `Get started with Firebase Auth by adding your first sign-in method` select `Email/Password`.
+> **Important:** `.env.local` is already listed in `.gitignore`. Never commit real credentials to version control.
 
-You should now be setup to use Firebase.
+### 3. Run the development server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser. The page hot-reloads as you edit files under `src/`.
+
+---
+
+## Set Up Firebase
+
+1. Go to [https://console.firebase.google.com/](https://console.firebase.google.com/) and sign in with your Google account.
+2. Click **Add project**, give it a name, and click **Create project**.
+3. On the project overview page, click the **web** icon (`</>`) to register a web app.
+4. Give the app a nickname and click **Register app**. Firebase will display your config object. Copy the values into `.env.local`.
+5. In the left sidebar, go to **Build > Authentication > Sign-in method** and enable **Email/Password**.
+6. *(Optional)* Go to **Build > Firestore Database** and create a database to use the Firestore helpers.
+
+---
+
+## Project Structure
+
+```text
+src/
+├── app/                        # Next.js App Router pages and layouts
+│   ├── admin/
+│   │   └── page.tsx            # Protected page, redirects unauthenticated users
+│   ├── signin/
+│   │   └── page.tsx            # Sign-in page
+│   ├── signup/
+│   │   └── page.tsx            # Sign-up page
+│   ├── globals.css             # Global styles (Tailwind base imports)
+│   ├── layout.tsx              # Root layout, wraps app in AuthContextProvider
+│   └── page.tsx                # Home page
+│
+├── context/
+│   └── AuthContext.tsx         # Auth context provider and useAuthContext hook
+│
+└── firebase/
+    ├── config.ts               # Firebase app initialization (singleton)
+    ├── auth/
+    │   ├── signIn.ts           # signInWithEmailAndPassword wrapper
+    │   └── signup.ts           # createUserWithEmailAndPassword wrapper
+    └── firestore/
+        ├── addData.ts          # setDoc helper with merge support
+        └── getData.js          # getDoc helper
+```
+
+---
 
 ## Authentication
 
-- In `src/firebase` directory, exists the directory `auth` containing the logic for `signin` and `signup`.
+Authentication is handled through Firebase Auth and surfaced app-wide via a React context.
 
-## Folder Structure
+**`src/context/AuthContext.tsx`** subscribes to `onAuthStateChanged` and exposes `{ user }` to any component that calls `useAuthContext()`. The root layout wraps the entire app in this provider, so auth state is always available client-side.
 
-The project’s folder structure is organized as follows:
+**`src/firebase/auth/`** contains two thin async wrappers:
 
-- `pages`: Contains the Next.js pages for server-side rendering.
-- `components`: Holds reusable React components.
-- `lib`: Includes utility functions and modules.
-- `public`: Stores static assets such as images, fonts, and stylesheets.
-- `styles`: Contains global styles and Tailwind CSS configuration.
-- `firebase`: Houses Firebase configuration and related functions.
+- `signIn(email, password)` - calls `signInWithEmailAndPassword` and returns `{ result, error }`
+- `signup(email, password)` - calls `createUserWithEmailAndPassword` and returns `{ result, error }`
 
-You are free to modify or expand the folder structure according to your project’s needs.  
-For example, additional subfolders could be organized like this:
+Both functions return a consistent `{ result, error }` shape so callers can handle errors without try/catch.
 
-- `components`
-  - `UI`
-  - `custom`
-  - `partials`
-  - ...
-- `public`
-  - `assets`
-    - `images`
-    - `fonts`
-    - `gifs`
-  - ...
-- ...
+**Protected routes** - `src/app/admin/page.tsx` demonstrates the pattern: read `user` from `useAuthContext()` inside a `useEffect`, then call `router.push("/")` if the user is `null`.
+
+---
+
+## Firestore Helpers
+
+Two utility functions live in `src/firebase/firestore/`:
+
+|Function|Description|
+|-------|---------|
+|`addData(collection, id, data)`|Writes (or merges) a document at `collection/id` using `setDoc` with `{ merge: true }`|
+|`getData(collection, id)`|Reads a single document from `collection/id` using `getDoc`|
+
+Both return `{ result, error }` for consistent error handling.
+
+---
+
+## Available Scripts
+
+|Command|Description|
+|-------|---------|
+|`npm run dev`|Start the development server at `http://localhost:3000`|
+|`npm run build`|Build the application for production|
+|`npm run start`|Start the production server (requires `build` first)|
+|`npm run lint`|Run ESLint across the project|
+|`npm run release`|Bump the version and generate a changelog via `standard-version`|
+
+---
 
 ## Deployment
 
-To deploy your Next.js application with Firebase, follow the Firebase deployment instructions specific to your hosting option (Firebase Hosting, Cloud Functions, etc.). Make sure to set up the appropriate environment variables for your production environment.
+### Vercel (recommended)
+
+1. Push your repository to GitHub.
+2. Import the project at [vercel.com/new](https://vercel.com/new).
+3. Add all `NEXT_PUBLIC_FIREBASE_*` environment variables in the Vercel project settings.
+4. Deploy. Vercel handles builds and previews automatically on every push.
+
+### Other platforms
+
+Set the same `NEXT_PUBLIC_FIREBASE_*` environment variables in your host's dashboard and run:
+
+```bash
+npm run build
+npm run start
+```
+
+See the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for platform-specific guidance.
+
+---
 
 ## Contributing
 
-Contributions are welcome! If you encounter any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
+Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. Bug reports and feature requests can be filed via [GitHub Issues](../../issues).
+
+## Security
+
+Please review [SECURITY.md](SECURITY.md) for the project's vulnerability disclosure policy.
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
 
-## Acknowledgements
+---
 
-This project was built with the help of several amazing tools, frameworks, and resources:
-
-- [Next.js](https://nextjs.org/) – for providing a modern React framework with server-side rendering and powerful features.
-- [Firebase](https://firebase.google.com/) – for authentication, real-time database, and cloud services that simplify app development.
-- [Tailwind CSS](https://tailwindcss.com/) – for a utility-first CSS framework that makes styling fast and consistent.
-- [ESLint](https://eslint.org/) & [Prettier](https://prettier.io/) – for enforcing best practices and maintaining a clean, consistent codebase.
-- [Vercel](https://vercel.com/) – for seamless deployment and hosting tailored to Next.js projects.
-- [Open Source Community](https://github.com/) – for the continuous contributions, packages, and inspiration that make projects like this possible.
-
-Special thanks to the Next.js and Firebase teams for their excellent documentation and active communities, which made this starter template easier to create and extend.
-
-Resources
+## Resources
 
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Firebase Documentation](https://firebase.google.com/docs)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
