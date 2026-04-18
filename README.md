@@ -6,14 +6,14 @@ A production-ready starter template for building full-stack web applications wit
 
 ## Tech Stack
 
-|Layer|Technology|
-|-----|---------|
-|Framework|[Next.js 15](https://nextjs.org/) (App Router)|
-|UI Library|[React 19](https://react.dev/)|
-|Styling|[Tailwind CSS](https://tailwindcss.com/)|
-|Language|[TypeScript](https://www.typescriptlang.org/)|
-|Backend / Auth|[Firebase](https://firebase.google.com/) (Auth + Firestore)|
-|Linting|[ESLint](https://eslint.org/) + [Prettier](https://prettier.io/)|
+| Layer          | Technology                                                       |
+| -------------- | ---------------------------------------------------------------- |
+| Framework      | [Next.js 15](https://nextjs.org/) (App Router)                   |
+| UI Library     | [React 19](https://react.dev/)                                   |
+| Styling        | [Tailwind CSS](https://tailwindcss.com/)                         |
+| Language       | [TypeScript](https://www.typescriptlang.org/)                    |
+| Backend / Auth | [Firebase](https://firebase.google.com/) (Auth + Firestore)      |
+| Linting        | [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/) |
 
 ---
 
@@ -86,7 +86,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser. The page ho
 3. On the project overview page, click the **web** icon (`</>`) to register a web app.
 4. Give the app a nickname and click **Register app**. Firebase will display your config object. Copy the values into `.env.local`.
 5. In the left sidebar, go to **Build > Authentication > Sign-in method** and enable **Email/Password**.
-6. *(Optional)* Go to **Build > Firestore Database** and create a database to use the Firestore helpers.
+6. _(Optional)_ Go to **Build > Firestore Database** and create a database to use the Firestore helpers.
 
 ---
 
@@ -141,10 +141,10 @@ Both functions return a consistent `{ result, error }` shape so callers can hand
 
 Two utility functions live in `src/firebase/firestore/`:
 
-|Function|Description|
-|-------|---------|
-|`addData(collection, id, data)`|Writes (or merges) a document at `collection/id` using `setDoc` with `{ merge: true }`|
-|`getData(collection, id)`|Reads a single document from `collection/id` using `getDoc`|
+| Function                        | Description                                                                            |
+| ------------------------------- | -------------------------------------------------------------------------------------- |
+| `addData(collection, id, data)` | Writes (or merges) a document at `collection/id` using `setDoc` with `{ merge: true }` |
+| `getData(collection, id)`       | Reads a single document from `collection/id` using `getDoc`                            |
 
 Both return `{ result, error }` for consistent error handling.
 
@@ -152,13 +152,13 @@ Both return `{ result, error }` for consistent error handling.
 
 ## Available Scripts
 
-|Command|Description|
-|-------|---------|
-|`npm run dev`|Start the development server at `http://localhost:3000`|
-|`npm run build`|Build the application for production|
-|`npm run start`|Start the production server (requires `build` first)|
-|`npm run lint`|Run ESLint across the project|
-|`npm run release`|Bump the version and generate a changelog via `standard-version`|
+| Command           | Description                                                      |
+| ----------------- | ---------------------------------------------------------------- |
+| `npm run dev`     | Start the development server at `http://localhost:3000`          |
+| `npm run build`   | Build the application for production                             |
+| `npm run start`   | Start the production server (requires `build` first)             |
+| `npm run lint`    | Run ESLint across the project                                    |
+| `npm run release` | Bump the version and generate a changelog via `standard-version` |
 
 ---
 
