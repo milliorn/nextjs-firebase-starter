@@ -38,7 +38,7 @@ jobs:
     steps:
       - name: Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v3.0.0
+        uses: dependabot/fetch-metadata@v3.1.0
 
       # Decide once: allow github-actions (any semver) or patch/minor updates;
       # deny everything else. Major updates are filtered upstream by dependabot.yml,
