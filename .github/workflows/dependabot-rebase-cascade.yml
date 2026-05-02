@@ -1,0 +1,36 @@
+name: Dependabot stale rebase
+
+on:
+  pull_request_target:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  rebase-stale-dependabot-prs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    # Only fire when a Dependabot PR was actually merged (not closed/abandoned)
+    if: |
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.user.login == 'dependabot[bot]'
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Rebase remaining open Dependabot PRs
+        run: |
+          gh pr list \
+            --repo "${{ github.repository }}" \
+            --author "app/dependabot" \
+            --state open \
+            --json number \
+            --jq '.[].number' | \
+          while read -r pr; do
+            echo "Requesting rebase on PR #$pr"
+            gh pr comment "$pr" \
+              --repo "${{ github.repository }}" \
+              --body "@dependabot rebase"
+          done
