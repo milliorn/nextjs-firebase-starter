@@ -23,7 +23,7 @@
     "autoprefixer": "10.5.0",
     "eslint": "9.39.4",
     "eslint-config-next": "^15.5.14",
-    "postcss": "^8.5.14",
+    "postcss": "^8.5.15",
     "standard-version": "^9.5.0",
     "tailwindcss": "^4.1.18",
     "typescript": "5.9.3"
