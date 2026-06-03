@@ -48,7 +48,7 @@ jobs:
         run: |
           ecosystem="${{ steps.metadata.outputs.package-ecosystem }}"
           update_type="${{ steps.metadata.outputs.update-type }}"
-          if [[ "$ecosystem" == "github-actions" ]] || \
+          if [[ "$ecosystem" == "github_actions" ]] || \
              [[ "$update_type" == "version-update:semver-patch" ]] || \
              [[ "$update_type" == "version-update:semver-minor" ]]; then
             echo "action=allow" >> "$GITHUB_OUTPUT"
