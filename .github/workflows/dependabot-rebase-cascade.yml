@@ -24,7 +24,7 @@ jobs:
         run: |
           gh pr list \
             --repo "${{ github.repository }}" \
-            --author "app/dependabot" \
+            --author "dependabot[bot]" \
             --state open \
             --json number \
             --jq '.[].number' | \
