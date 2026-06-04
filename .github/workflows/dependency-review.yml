@@ -42,7 +42,7 @@ jobs:
       # at low severity or higher is introduced by this PR.
       # Commonly enabled options, see https://github.com/actions/dependency-review-action#configuration-options for all available options.
       - name: Dependency Review
-        uses: actions/dependency-review-action@v4.9.0
+        uses: actions/dependency-review-action@v5.0.0
         with:
           comment-summary-in-pr: on-failure
           fail-on-severity: low
