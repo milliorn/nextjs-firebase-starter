@@ -34,7 +34,7 @@ jobs:
     steps:
       # Check out the repository so the action can read the manifest files.
       - name: Checkout repository
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v7
         with:
           fetch-depth: 1
 
