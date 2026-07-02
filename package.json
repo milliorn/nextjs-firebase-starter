@@ -12,13 +12,13 @@
   "dependencies": {
     "firebase": "^12.14.0",
     "next": "^15.5.19",
-    "react": "19.2.4",
+    "react": "19.2.7",
     "react-dom": "19.2.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.2",
     "@types/node": "^24.12.4",
-    "@types/react": "19.2.14",
+    "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
     "autoprefixer": "10.5.2",
     "eslint": "9.39.4",
