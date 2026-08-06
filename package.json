@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "firebase": "^12.14.0",
-    "next": "^15.5.19",
+    "next": "^15.5.22",
     "react": "19.2.7",
     "react-dom": "19.2.7"
   },
