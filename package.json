@@ -22,7 +22,7 @@
     "@types/react-dom": "19.3.0",
     "autoprefixer": "10.6.1",
     "eslint": "9.39.5",
-    "eslint-config-next": "^15.5.22",
+    "eslint-config-next": "^15.5.26",
     "postcss": "^8.5.28",
     "standard-version": "^9.5.0",
     "tailwindcss": "^4.3.3",
