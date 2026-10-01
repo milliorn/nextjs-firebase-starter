@@ -20,7 +20,7 @@
     "@types/node": "^24.19.0",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.3.0",
-    "autoprefixer": "10.5.4",
+    "autoprefixer": "10.6.1",
     "eslint": "9.39.5",
     "eslint-config-next": "^15.5.22",
     "postcss": "^8.5.28",
