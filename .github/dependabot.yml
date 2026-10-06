@@ -16,6 +16,17 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    # react and react-dom must stay on matching versions -- the renderer
+    # depends on it -- but Dependabot does not pair them by default the way
+    # it auto-pairs a package with its own @types/* package. Group them (and
+    # their types) explicitly so they always bump together in one PR.
+    groups:
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
     ignore:
       - dependency-name: "*"
         update-types:
