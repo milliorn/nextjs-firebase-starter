@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "release": "standard-version"
   },
   "dependencies": {
@@ -22,7 +22,7 @@
     "@types/react-dom": "19.3.0",
     "autoprefixer": "10.6.1",
     "eslint": "9.39.5",
-    "eslint-config-next": "^15.5.27",
+    "eslint-config-next": "^16.4.0",
     "postcss": "^8.5.28",
     "standard-version": "^9.5.0",
     "tailwindcss": "^4.3.3",
