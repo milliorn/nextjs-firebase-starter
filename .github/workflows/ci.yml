@@ -1,0 +1,43 @@
+# Verifies the app still lints and builds on every PR, including
+# Dependabot's. automerge.yml only inspects Dependabot's update metadata
+# (patch/minor/major) -- it never installs or builds anything, so a patch
+# release that breaks the Next.js build would otherwise merge unchecked. Add
+# this workflow's job as a required status check (alongside merge-gatekeeper)
+# so that no longer happens.
+name: CI
+
+on:
+  pull_request:
+    branches: ["main"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      # next build also type-checks (tsconfig has strict: true, and
+      # next.config.js does not set typescript.ignoreBuildErrors).
+      - name: Build
+        run: npm run build
