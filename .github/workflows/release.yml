@@ -40,3 +40,8 @@ jobs:
 
       - name: Run release
         run: npm run release
+
+      # npm run release (standard-version) only commits and tags locally.
+      # Without this, the version bump and changelog never leave the runner.
+      - name: Push release commit and tag
+        run: git push --follow-tags origin main
