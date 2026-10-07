@@ -37,7 +37,21 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      # /admin prerenders at build time and calls Firebase's getAuth(),
+      # which needs real-looking config values even though this build never
+      # talks to Firebase over the network. These are NEXT_PUBLIC_* values
+      # Firebase itself treats as publishable (not secrets in the usual
+      # sense), but are still stored as repo secrets to keep them out of
+      # workflow file text.
+      #
       # next build also type-checks (tsconfig has strict: true, and
       # next.config.js does not set typescript.ignoreBuildErrors).
       - name: Build
+        env:
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
+          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
         run: npm run build
