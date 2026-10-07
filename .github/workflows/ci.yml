@@ -39,19 +39,22 @@ jobs:
 
       # /admin prerenders at build time and calls Firebase's getAuth(),
       # which needs real-looking config values even though this build never
-      # talks to Firebase over the network. These are NEXT_PUBLIC_* values
-      # Firebase itself treats as publishable (not secrets in the usual
-      # sense), but are still stored as repo secrets to keep them out of
-      # workflow file text.
+      # talks to Firebase over the network. These are repo Variables, not
+      # Secrets: Dependabot-triggered workflow runs can't read Actions
+      # Secrets at all (only the separate Dependabot-secrets store, or
+      # Variables), so Secrets here would silently break this exact check
+      # for every Dependabot PR, the main thing this workflow exists to
+      # catch. Fine as Variables anyway since Firebase's own NEXT_PUBLIC_*
+      # convention already treats this config as publishable.
       #
       # next build also type-checks (tsconfig has strict: true, and
       # next.config.js does not set typescript.ignoreBuildErrors).
       - name: Build
         env:
-          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
-          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
-          NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
-          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
-          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
-          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ vars.NEXT_PUBLIC_FIREBASE_API_KEY }}
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ vars.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ vars.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
+          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_APP_ID }}
         run: npm run build
