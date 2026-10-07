@@ -1,0 +1,60 @@
+# Verifies the app still lints and builds on every PR, including
+# Dependabot's. automerge.yml only inspects Dependabot's update metadata
+# (patch/minor/major) -- it never installs or builds anything, so a patch
+# release that breaks the Next.js build would otherwise merge unchecked. Add
+# this workflow's job as a required status check (alongside merge-gatekeeper)
+# so that no longer happens.
+name: CI
+
+on:
+  pull_request:
+    branches: ["main"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      # /admin prerenders at build time and calls Firebase's getAuth(),
+      # which needs real-looking config values even though this build never
+      # talks to Firebase over the network. These are repo Variables, not
+      # Secrets: Dependabot-triggered workflow runs can't read Actions
+      # Secrets at all (only the separate Dependabot-secrets store, or
+      # Variables), so Secrets here would silently break this exact check
+      # for every Dependabot PR, the main thing this workflow exists to
+      # catch. Fine as Variables anyway since Firebase's own NEXT_PUBLIC_*
+      # convention already treats this config as publishable.
+      #
+      # next build also type-checks (tsconfig has strict: true, and
+      # next.config.js does not set typescript.ignoreBuildErrors).
+      - name: Build
+        env:
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ vars.NEXT_PUBLIC_FIREBASE_API_KEY }}
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ vars.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ vars.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
+          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_APP_ID }}
+        run: npm run build
