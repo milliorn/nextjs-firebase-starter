@@ -1,4 +1,4 @@
-# Contributing to Next.js 13 Firebase Starter
+# Contributing to Next.js Firebase Starter
 
 Thank you for considering contributing to this project and welcome contributions from the community to help improve our project! This document provides guidelines for contributing and interacting with our project.
 
@@ -12,6 +12,7 @@ Please take a moment to review this document to ensure a smooth and effective co
 - [Feature Requests](#feature-requests)
 - [Issue and Pull Request Guidelines](#issue-and-pull-request-guidelines)
 - [Coding Guidelines](#coding-guidelines)
+- [Local Verification](#local-verification)
 - [Commit Message Guidelines](#commit-message-guidelines)
 - [License](#license)
 
@@ -81,14 +82,21 @@ To maintain a consistent codebase, please follow the project's coding guidelines
 
 Refer to the project's documentation or codebase for specific coding guidelines.
 
+## Local Verification
+
+Before opening a pull request, run the same checks CI will run:
+
+```bash
+npm ci
+npm run lint
+npm run build
+```
+
+Every PR also needs to pass `dependency-review` (no newly introduced vulnerable dependencies) and `merge-gatekeeper` (an aggregate of all other required checks) before it can merge. See the [Continuous Integration](README.md#continuous-integration) section of the README for details, including the environment setup needed if you're forking this repo and want CI to pass.
+
 ## Commit Message Guidelines
 
-When committing changes to the project, please follow these guidelines for commit messages:
-
-- Use clear and descriptive messages that summarize the changes.
-- Start the message with a verb in the present tense (e.g., "Fix bug," "Add feature," "Update documentation," etc.).
-- Keep the message concise and to the point.
-- If needed, provide additional details or context in the commit body.
+This repo follows [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/): `<type>: <description>`, e.g. `fix: correct auth redirect loop` or `feat: add password reset flow`. Common types: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `ci`. This format is also what `npm run release` (`standard-version`) uses to generate the changelog, so sticking to it keeps release notes accurate.
 
 ## License
 
@@ -96,4 +104,4 @@ By contributing to this project, you agree that your contributions will be licen
 
 ---
 
-We appreciate your interest and contributions to [Your Project Name]. Thank you for your support!
+We appreciate your interest and contributions. Thank you for your support!

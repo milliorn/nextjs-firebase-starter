@@ -1,6 +1,6 @@
 # Next.js Firebase Starter
 
-A production-ready starter template for building full-stack web applications with **Next.js 15**, **React 19**, and **Firebase**. This template ships with email/password authentication, Firestore data helpers, a route-protected admin page, and a global auth context so you can skip the boilerplate and start building.
+A production-ready starter template for building full-stack web applications with **Next.js 16**, **React 19**, and **Firebase**. This template ships with email/password authentication, Firestore data helpers, a route-protected admin page, and a global auth context so you can skip the boilerplate and start building.
 
 ---
 
@@ -8,12 +8,12 @@ A production-ready starter template for building full-stack web applications wit
 
 | Layer          | Technology                                                       |
 | -------------- | ---------------------------------------------------------------- |
-| Framework      | [Next.js 15](https://nextjs.org/) (App Router)                   |
+| Framework      | [Next.js 16](https://nextjs.org/) (App Router)                   |
 | UI Library     | [React 19](https://react.dev/)                                   |
 | Styling        | [Tailwind CSS](https://tailwindcss.com/)                         |
 | Language       | [TypeScript](https://www.typescriptlang.org/)                    |
 | Backend / Auth | [Firebase](https://firebase.google.com/) (Auth + Firestore)      |
-| Linting        | [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/) |
+| Linting        | [ESLint](https://eslint.org/) (flat config)                      |
 
 ---
 
@@ -30,7 +30,7 @@ A production-ready starter template for building full-stack web applications wit
 
 ## Prerequisites
 
-- **Node.js 18** or higher
+- **Node.js 20.19+, 22.13+, or 24+** (Next.js 16's minimum supported versions)
 - **npm** (bundled with Node.js)
 - A [Firebase project](https://console.firebase.google.com/)
 
@@ -50,13 +50,11 @@ npm install
 
 ### 2. Configure environment variables
 
-Create a `.env.local` file in the project root:
+Copy the example file and fill in your Firebase project's values:
 
 ```bash
-cp .env.local.example .env.local   # if the example file exists, otherwise create it
+cp .env.local.example .env.local
 ```
-
-Add your Firebase project credentials (see [Set Up Firebase](#set-up-firebase) below):
 
 ```env
 NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
@@ -67,7 +65,9 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 ```
 
-> **Important:** `.env.local` is already listed in `.gitignore`. Never commit real credentials to version control.
+See [Set Up Firebase](#set-up-firebase) below for where to find these values.
+
+> **Note:** these are client-side config values, not secrets. Firebase ships them to every visitor's browser by design; real protection for your data comes from [Firestore Security Rules](https://firebase.google.com/docs/firestore/security/get-started) and API key restrictions configured in the Firebase Console, not from hiding this config. `.env.local` is still gitignored as a convenience so you don't have to retype these locally, but there's no need to treat the values themselves as sensitive.
 
 ### 3. Run the development server
 
@@ -150,6 +150,29 @@ Both return `{ result, error }` for consistent error handling.
 
 ---
 
+## Continuous Integration
+
+This repo runs several GitHub Actions workflows on every pull request:
+
+| Workflow                | What it does                                                                |
+| ------------------------ | ---------------------------------------------------------------------------- |
+| `ci.yml`                  | Runs `npm run lint` and `npm run build` (which also type-checks)             |
+| `dependency-review.yml`   | Scans dependency manifest changes against GitHub's advisory database        |
+| `label.yml`                | Auto-labels PRs                                                              |
+| `merge-gatekeeper.yml`     | Aggregates every other check into a single required status                   |
+| `automerge.yml`            | Auto-approves and merges Dependabot patch/minor PRs                          |
+| `dependabot-rebase-cascade.yml` | Rebases other open Dependabot PRs after one merges                      |
+| `release.yml`               | Bumps the version and generates a changelog on pushes to `main`              |
+
+If you fork this template and want `ci.yml` to pass, you need to configure your Firebase config as **GitHub Actions repository Variables** (not Secrets):
+
+1. Go to your repo's **Settings > Secrets and variables > Actions > Variables tab**.
+2. Add the same six `NEXT_PUBLIC_FIREBASE_*` values from your `.env.local` as repository Variables.
+
+**Why Variables and not Secrets:** the `/admin` route calls Firebase's `getAuth()` at build time, so `npm run build` needs real-looking config values even in CI. GitHub Actions Secrets are unavailable to any workflow run triggered by Dependabot (regardless of event type), so storing this config as Secrets would silently break the build check on every Dependabot PR, the exact case `ci.yml` exists to protect. Variables are available on Dependabot-triggered runs, and are the right fit anyway since this config is already public by Firebase's own `NEXT_PUBLIC_` convention.
+
+If you want Dependabot to auto-merge patch/minor updates and rebase stale PRs, also add a `DEPENDABOT_REBASE_PAT` repository **secret**: a fine-grained personal access token (no expiration, scoped to this repo, with `Contents: Read and write` + `Pull requests: Read and write`). The default `GITHUB_TOKEN` can't trigger other workflow runs (GitHub's anti-recursion protection), so a PAT is required for the rebase-cascade workflow to actually fire after a merge.
+
 ## Available Scripts
 
 | Command           | Description                                                      |
@@ -170,6 +193,8 @@ Both return `{ result, error }` for consistent error handling.
 2. Import the project at [vercel.com/new](https://vercel.com/new).
 3. Add all `NEXT_PUBLIC_FIREBASE_*` environment variables in the Vercel project settings.
 4. Deploy. Vercel handles builds and previews automatically on every push.
+
+This is separate from the GitHub Actions setup above: Vercel environment variables only affect Vercel's own builds, not the `ci.yml` workflow that runs on GitHub. You need both configured for a PR to show a green build check on GitHub *and* a working Vercel preview.
 
 ### Other platforms
 

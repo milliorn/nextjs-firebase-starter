@@ -4,7 +4,7 @@
 
 Security is taken seriously and appreciation for the efforts of security researchers and the community in helping to maintain a secure ecosystem. If you discover any security vulnerabilities in this project, please responsibly disclose them.
 
-To report a security vulnerability, please send an email to [scottmilliorn@gmail.com](mailto:security@yourproject.com) with the following details:
+To report a security vulnerability, please send an email to [scottmilliorn@gmail.com](mailto:scottmilliorn@gmail.com) with the following details:
 
 - A clear description of the vulnerability and the potential impact.
 - Steps to reproduce the vulnerability or a proof-of-concept.
@@ -36,6 +36,6 @@ Please note that this security policy applies to this project and its associated
 
 ## Help Wanted
 
-Appreciation will be shown for your efforts in helping maintain the security of this project. If you have any suggestions or feedback regarding the security practices or this security policy, please feel free to email at [scottmilliorn@gmail.com](mailto:scottmilliorn@google.com).
+Appreciation will be shown for your efforts in helping maintain the security of this project. If you have any suggestions or feedback regarding the security practices or this security policy, please feel free to email at [scottmilliorn@gmail.com](mailto:scottmilliorn@gmail.com).
 
 Thank you for your commitment to keeping this project secure!
