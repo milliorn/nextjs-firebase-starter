@@ -23,14 +23,10 @@ permissions:
   pull-requests: write
   contents: write
 
-env:
-  # Opt into Node.js 24 now ahead of the June 2, 2026 forced migration.
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   review-dependabot-pr:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
     # Skip entirely if this PR wasn't opened by Dependabot.
     if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
     env:
